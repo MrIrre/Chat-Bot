@@ -74,7 +74,7 @@ public class QuestionsFromSiteTest {
     @Test
     public void wrongNumberOfPage() throws Exception {
         try {
-            var actual = QuestionsFromSite.quizParser(400);
+            QuestionsFromSite.quizParser(400);
         } catch (UnknownHostException | FileNotFoundException noPageOrNoNet) {
             Assert.assertNotEquals("", noPageOrNoNet.getMessage());
         }
