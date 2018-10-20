@@ -1,11 +1,10 @@
 package iomanager;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.net.URL;
+import java.net.*;
+import java.io.*;
 import java.util.*;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 
 public class QuestionsFromSite {
     public static final int NumberOfPages = 299;
@@ -72,8 +71,17 @@ public class QuestionsFromSite {
     }
 
     private static ArrayList<String> createVariantsList(String variants, String curAnswer) {
-        ArrayList<String> variantsList = new ArrayList<>(Arrays.asList(variants.split(", ")));
+        ArrayList<String> variantsList = new ArrayList<>(Arrays.asList(variants.split(",")));
         variantsList.add(curAnswer);
+
+        for (int k = 0; k < variantsList.size(); k++) {
+            var curVariant = variantsList.get(k);
+            if (curVariant.charAt(0) == ' '){
+                variantsList.remove(k);
+                variantsList.add(curVariant.substring(1));
+            }
+        }
+
         Collections.shuffle(variantsList);
         return variantsList;
     }
