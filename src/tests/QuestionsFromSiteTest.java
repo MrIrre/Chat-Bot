@@ -3,16 +3,11 @@ package tests;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.UnknownHostException;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import iomanager.*;
+import java.util.*;
 
-import static org.hamcrest.CoreMatchers.is;
+import iomanager.*;
 
 public class QuestionsFromSiteTest {
 
@@ -62,13 +57,19 @@ public class QuestionsFromSiteTest {
         answerSet.clear();
 
         var actualTemp = QuestionsFromSite.quizParser(0);
-        Map<String, Set<String>> actual = new HashMap<>();
 
         for (String curStringActual:actualTemp.keySet()) {
-            actual.put(curStringActual.substring(0, curStringActual.indexOf("[")), actualTemp.get(curStringActual));
-        }
+            String curString = curStringActual.substring(0, curStringActual.indexOf("["));
+            String variantsFromCurString = curStringActual
+                    .substring(curStringActual.indexOf("[") + 1, curStringActual.indexOf("]")).toLowerCase();
 
-        Assert.assertThat(expected, is(actual));
+            Assert.assertTrue(expected.keySet().contains(curString));
+
+            ArrayList<String> variants = new ArrayList<>(Arrays.asList(variantsFromCurString.split(", |\\d\\) ")));
+            String rightAnswer = expected.get(curString).iterator().next();
+
+            Assert.assertTrue(variants.contains(rightAnswer));
+        }
     }
 
     @Test
