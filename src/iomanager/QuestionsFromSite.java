@@ -1,5 +1,4 @@
 package iomanager;
-import java.lang.reflect.Array;
 import java.net.*;
 import java.io.*;
 import java.util.*;
@@ -10,7 +9,7 @@ import java.util.regex.Matcher;
  * Класс отвечает за парсинг веб-страниц с вопросами для викторины
  */
 public class QuestionsFromSite {
-    public static final int NumberOfPages = 299; //Колчисество страниц на сайте, откуда берутся вопросы
+    public static final int NumberOfPages = 299; //Количество страниц на сайте, откуда берутся вопросы
 
     /**
      * Функция, которая берет с веб-страницы с данным номером все вопросы и варианты ответов на каждый вопрос.
@@ -41,7 +40,7 @@ public class QuestionsFromSite {
         String categoriesFromSite = quizText.substring(quizText.indexOf("q-list__table") + "q-list__table".length() + 2);
         String categories = categoriesFromSite.substring(0, categoriesFromSite.indexOf("</table>"));
 
-        //Меняем все html ковычки на обычные.
+        //Меняем все html кавычки на обычные.
         Pattern quotPattern = Pattern.compile("&quot;");
         Matcher quotMatcher = quotPattern.matcher(categories);
         categories = quotMatcher.replaceAll("");
@@ -57,6 +56,7 @@ public class QuestionsFromSite {
         ArrayList<String> answers = parseAnswers(categories);
 
         int counter = 0;
+
         //Идем по всем найденным вопросам и ответам и записываем их в Map
         while (questionMatcher.find() && variantsMatcher.find() && counter < answers.size()) {
             String curLine = questionMatcher.group();

@@ -12,6 +12,7 @@ import java.util.*;
 public class MainLoop {
     private static Map<String, User> Users = new HashMap<>();
     private static Deque<Request> Requests = new ArrayDeque<>();
+    private static RequestHandler RequestHandler = new RequestHandler();
 
     /**
      * Запуск главного цикла.
@@ -21,7 +22,7 @@ public class MainLoop {
     public void runMainLoop(Input input, Output output) throws Exception {
 
         while (true){
-            Request inputedRequest = input.GetRequest();
+            Request inputedRequest = input.getRequest();
 
             if (!inputedRequest.getRequest().equals("")){
                 Requests.push(inputedRequest);
@@ -39,8 +40,8 @@ public class MainLoop {
             }
 
             User curUser = Users.get(curRequest.getUserId());
-            ArrayList<String> curAnswer = RequestHandler.GetAnswer(curRequest.getRequest(), curUser);
-            output.Print(curAnswer);
+            ArrayList<String> curAnswer = RequestHandler.getAnswer(curRequest.getRequest(), curUser);
+            output.print(curAnswer);
         }
     }
 }

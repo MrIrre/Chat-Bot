@@ -11,15 +11,15 @@ import java.util.Scanner;
  * Класс консоли(User Interface), который реализовывает интерфейсы Input, Output для правильного общения с юзером.
  */
 public class Console implements Input, Output {
-    private static final Scanner input = new Scanner(System.in);
+    private static final Scanner Input = new Scanner(System.in);
 
     @Override
-    public Request GetRequest() {
-        return new Request("ConsoleUser", input.nextLine(), Version.Console);
+    public Request getRequest() {
+        return new Request("ConsoleUser", Input.nextLine(), Version.Console);
     }
 
     @Override
-    public void Print(ArrayList<String> outputStrings) {
+    public void print(ArrayList<String> outputStrings) {
         for (String line: outputStrings){
             System.out.println(line);
         }
