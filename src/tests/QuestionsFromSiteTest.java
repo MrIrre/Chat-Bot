@@ -75,8 +75,8 @@ public class QuestionsFromSiteTest {
     public void wrongNumberOfPage() throws Exception {
         try {
             var actual = QuestionsFromSite.quizParser(400);
-        } catch (UnknownHostException | FileNotFoundException noNetOrNoNet) {
-            Assert.assertNotEquals("", noNetOrNoNet.getMessage());
+        } catch (UnknownHostException | FileNotFoundException noPageOrNoNet) {
+            Assert.assertNotEquals("", noPageOrNoNet.getMessage());
         }
     }
 }

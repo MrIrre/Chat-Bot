@@ -1,9 +1,11 @@
 package chatbot;
 
+import enums.Version;
+
 public class Request {
     private String UserId;
     private String InputRequest;
-    private Version Version;
+    private enums.Version Version;
 
     Request(String userId, String request, Version version){
         UserId = userId;

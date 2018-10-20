@@ -1,5 +1,8 @@
 package chatbot;
 
+import enums.Status;
+import enums.Version;
+
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
@@ -8,7 +11,7 @@ public class User {
     private int Score = 0;
     private int Health = 3;
     private String Id;
-    private Version Version;
+    private enums.Version Version;
     private boolean IsWin = true;
 
     Status State = Status.StartGame;
@@ -66,14 +69,3 @@ public class User {
     }
 }
 
-enum Status {
-    StartGame,
-    AnswerTheQuestion,
-    GameOver,
-    HelpReading,
-    ChoosingTopic
-}
-
-enum Version {
-    Console
-}

@@ -1,15 +1,15 @@
 package chatbot;
 
+import enums.Version;
 import interfaces.Input;
 import interfaces.Output;
-import iomanager.QuestionsFromSite;
 
 import java.util.*;
 
 
 public class MainLoop {
     private static Map<String, User> Users = new HashMap<>();
-    static Deque<Request> Requests = new ArrayDeque<>();
+    private static Deque<Request> Requests = new ArrayDeque<>();
 
     public void runMainLoop(Input input, Output output) throws Exception {
 

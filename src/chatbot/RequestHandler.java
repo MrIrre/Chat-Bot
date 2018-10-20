@@ -1,5 +1,6 @@
 package chatbot;
 
+import enums.Status;
 import iomanager.QuestionsFromSite;
 
 import java.util.ArrayList;

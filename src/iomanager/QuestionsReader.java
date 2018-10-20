@@ -8,8 +8,6 @@ import java.util.regex.Pattern;
 
 public class QuestionsReader
 {
-    public static final int NumberOfPages = 299;
-
 	public static Map<String, Set<String>> GetDataFromFile(String fileName){
 		BufferedReader reader;
 		Map<String, Set<String>> questionsAndAnswers = new HashMap<>();
@@ -26,7 +24,6 @@ public class QuestionsReader
 			}
 
 			reader.close();
-
 		}
 		catch (IOException e) {
 			e.printStackTrace();
