@@ -15,6 +15,9 @@ public class RequestHandler {
 
     /**
      * Метод, обрабатывающий запрос, который возвращает ответ на данный запрос.
+     * @param inputString Строка запроса.
+     * @param user Пользователь, запрос которого, обрабатывается.
+     * @return Строки с ответом.
      */
     public static ArrayList<String> GetAnswer(String inputString, User user) throws Exception {
         ArrayList<String> answerList = new ArrayList<>();

@@ -6,6 +6,9 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * Парсер файла с вопросами и правильными ответами к ним из файлов.
+ */
 public class QuestionsReader
 {
 	public static Map<String, Set<String>> GetDataFromFile(String fileName){

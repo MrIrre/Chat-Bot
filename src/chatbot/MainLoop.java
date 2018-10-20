@@ -13,6 +13,11 @@ public class MainLoop {
     private static Map<String, User> Users = new HashMap<>();
     private static Deque<Request> Requests = new ArrayDeque<>();
 
+    /**
+     * Запуск главного цикла.
+     * @param input Класс, реализующий Input интерфейс.
+     * @param output Класс, реализующий Output интерфейс.
+     */
     public void runMainLoop(Input input, Output output) throws Exception {
 
         while (true){

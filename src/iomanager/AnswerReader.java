@@ -5,6 +5,9 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Парсер вариаций ответов для пользователя.
+ */
 public class AnswerReader {
     public static ArrayList<String> ParseAnswersFromFile(String fileName){
         ArrayList<String> curAnswers = new ArrayList<>();
