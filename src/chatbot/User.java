@@ -7,12 +7,15 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Класс пользователя. Хранит в себе всю необходимую информацию о данном пользователе.
+ */
 public class User {
     private int Score = 0;
     private int Health = 3;
     private String Id;
     private enums.Version Version;
-    private boolean IsWin = true;
+    private boolean WinState = true;
 
     Status State = Status.StartGame;
     Map<String, Set<String>> QuestionsAndAnswers;
@@ -49,7 +52,11 @@ public class User {
     }
 
     public void changeWinState(){
-        IsWin = false;
+        WinState = false;
+    }
+
+    public boolean isWin(){
+        return WinState;
     }
 
     public void resetScore(){
@@ -64,6 +71,7 @@ public class User {
         AllQuestions = null;
         QuestionsAndAnswers = null;
         CurQuestion = null;
+        WinState = true;
         resetHealth();
         resetScore();
     }

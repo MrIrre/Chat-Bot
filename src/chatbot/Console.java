@@ -7,6 +7,9 @@ import interfaces.Output;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Класс консоли(User Interface), который реализовывает интерфейсы Input, Output для правильного общения с юзером.
+ */
 public class Console implements Input, Output {
     private static final Scanner input = new Scanner(System.in);
 

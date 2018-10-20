@@ -6,11 +6,16 @@ import iomanager.QuestionsFromSite;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Логика бота. Обработка текущего запроса, в зависимости от состояния пользователя, отправившего данный запрос.
+ */
 public class RequestHandler {
     private static AnswerRepository answerRepository = new AnswerRepository();
     private static Random random = new Random();
 
-
+    /**
+     * Метод, обрабатывающий запрос, который возвращает ответ на данный запрос.
+     */
     public static ArrayList<String> GetAnswer(String inputString, User user) throws Exception {
         ArrayList<String> answerList = new ArrayList<>();
 
@@ -56,6 +61,13 @@ public class RequestHandler {
             }
 
             if (user.State == Status.GameOver){
+                if (user.isWin()){
+                    answerList.add(answerRepository.getWinString());
+                }
+                else{
+                    answerList.add(answerRepository.getLoseString());
+                }
+
                 user.State = Status.StartGame;
                 user.resetUser();
                 answerList.add(answerRepository.getGameOverString());

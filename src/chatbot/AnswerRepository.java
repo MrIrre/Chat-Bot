@@ -5,6 +5,9 @@ import iomanager.AnswerReader;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Хранилище возможных ответов бота на какие-либо запросы пользователя(Будет дополняться).
+ */
 class AnswerRepository {
     private ArrayList<String> HelloAnswers;
     private ArrayList<String> RightAnswers;
@@ -19,39 +22,47 @@ class AnswerRepository {
         WrongAnswers = AnswerReader.ParseAnswersFromFile("Answers/Wrong.txt");
     }
 
-    String getRandomHello(){
+    public String getRandomHello(){
         return HelloAnswers.get(random.nextInt(HelloAnswers.size()));
     }
 
-    String getRandomRightAnswer(){
+    public String getRandomRightAnswer(){
         return RightAnswers.get(random.nextInt(RightAnswers.size()));
     }
 
-    String getRandomWrongAnswer(){
+    public String getRandomWrongAnswer(){
         return WrongAnswers.get(random.nextInt(WrongAnswers.size()));
     }
 
-    String getScoreString() {
+    public String getScoreString() {
         return "Количество очков: ";
     }
 
-    String getHealthString(){
+    public String getHealthString(){
         return "Ваши HP, сэр: ";
     }
 
-    String getGameOverString(){
-        return "Игра окончена! Спасибо за игру:3";
+    public String getWinString(){
+        return "Победа! Слава и хвала победителю! :D";
     }
 
-    String getHPEndedString(){
+    public String getLoseString() {
+        return "Вы проиграли... Не расстраивайтесь, в следующий раз обязательно получится:)";
+    }
+
+    public String getGameOverString(){
+        return "Игра окончена! Спасибо за игру:3 Для начала новой игры напиши \"/start\".";
+    }
+
+    public String getHPEndedString(){
         return "ХП нема. Это конец.";
     }
 
-    String getAnswerEndedString() {
+    public String getAnswerEndedString() {
         return "Вы ответили на все вопросы! Поздравляю!";
     }
 
-    String getWrongRequestAnswerString(){
+    public String getWrongRequestAnswerString(){
         return "Сорян, не понял. Давай ещё раз.";
     }
 }

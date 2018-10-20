@@ -2,6 +2,12 @@ package chatbot;
 
 import enums.Version;
 
+/**
+ * Класс запроса от пользователя, который хранит:
+ *     1. Строку запроса;
+ *     2. ID пользователя, который отправил запрос;
+ *     3. Откуда пришёл запрос(Консоль, пока что);
+ */
 public class Request {
     private String UserId;
     private String InputRequest;

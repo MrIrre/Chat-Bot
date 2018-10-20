@@ -1,5 +1,8 @@
 package chatbot;
 
+/**
+ * Точка входа в приложение.
+ */
 public class Quizzz {
 
     public static void main(String[] args) throws Exception {

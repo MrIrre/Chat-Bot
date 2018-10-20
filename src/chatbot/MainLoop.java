@@ -6,7 +6,9 @@ import interfaces.Output;
 
 import java.util.*;
 
-
+/**
+ * Главный цикл чат-бота, который на каждой итерации обрабатывает запрос пользователя.
+ */
 public class MainLoop {
     private static Map<String, User> Users = new HashMap<>();
     private static Deque<Request> Requests = new ArrayDeque<>();
@@ -32,7 +34,6 @@ public class MainLoop {
             }
 
             User curUser = Users.get(curRequest.getUserId());
-
             ArrayList<String> curAnswer = RequestHandler.GetAnswer(curRequest.getRequest(), curUser);
             output.Print(curAnswer);
         }
