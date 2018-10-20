@@ -13,7 +13,7 @@ public class QuestionsFromSite {
 
     /**
      * Функция, которая берет с веб-страницы с данным номером все вопросы и варианты ответов на каждый вопрос.
-     * @param pageNumber
+     * @param pageNumber - номер страницы
      * @return Map, в котором лежат вопросы и отсветы на них.
      * @throws Exception
      */
@@ -80,8 +80,8 @@ public class QuestionsFromSite {
 
     /**
      * Функция отвечает за создание списка вариантов ответа на данный вопрос.
-     * @param variants
-     * @param curAnswer
+     * @param variants - все варианты кроме правильного.
+     * @param curAnswer - правильный вариант.
      * @return Список вариантов ответа.
      */
     private static ArrayList<String> createVariantsList(String variants, String curAnswer) {
@@ -98,7 +98,7 @@ public class QuestionsFromSite {
 
     /**
      * Функция добавляет к вариантам ответа номера.
-     * @param variantsList
+     * @param variantsList - список вариантов.
      * @return Измененный список ответов.
      */
     private static ArrayList<String> addNumbers(ArrayList<String> variantsList) {
@@ -112,7 +112,7 @@ public class QuestionsFromSite {
 
     /**
      * Функция создает список правильных ответов на все вопросы текущей веб-страницы.
-     * @param categoriesBlock
+     * @param categoriesBlock - блок кода, в котором содержатся все вопросы этой веб-страницы.
      * @return Список правильных ответов.
      */
     private static ArrayList<String> parseAnswers(String categoriesBlock) {
