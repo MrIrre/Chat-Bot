@@ -9,9 +9,10 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 public class RequestHandlerTest {
+    public RequestHandler requestHandler = new RequestHandler();
 
     @Test
-    public void regularStartCase() throws Exception {
+    public void correctStartCase() throws Exception {
         ArrayList<String> actual;
 
         User testUser1 = createUser();
@@ -20,24 +21,23 @@ public class RequestHandlerTest {
         String testInputedString = "/start";
         ArrayList<String> helloAnswers = AnswerReader.ParseAnswersFromFile("Answers/Hello.txt");
 
-        actual = RequestHandler.GetAnswer(testInputedString, testUser2);
+        actual = requestHandler.getAnswer(testInputedString, testUser2);
 
         Assert.assertTrue(helloAnswers.contains(actual.get(0))
                 || testUser1.AllQuestions.contains(actual.get(1)));
     }
 
     @Test
-    public void abracadabraStartCase() throws Exception {
+    public void incorrectStartCase() throws Exception {
         ArrayList<String> actual;
 
         User testUser1 = new User("ConsoleUser", Version.Console);
         User testUser2 = new User("ConsoleUser", Version.Console);
-        AnswerRepository answerRepository = new AnswerRepository();
 
         String testInputedString = "abracadabra";
-        String wrongRequestAnswer = answerRepository.getWrongRequestAnswerString();
+        String wrongRequestAnswer = AnswerRepository.getWrongRequestAnswerString();
 
-        actual = RequestHandler.GetAnswer(testInputedString, testUser2);
+        actual = requestHandler.getAnswer(testInputedString, testUser2);
 
         Assert.assertEquals(wrongRequestAnswer, actual.get(0));
         Assert.assertSame(testUser1.State, testUser2.State);
@@ -53,7 +53,7 @@ public class RequestHandlerTest {
         ArrayList<String> rightAnswers = AnswerReader.ParseAnswersFromFile("Answers/Right.txt");
 
         String rightAnswer = new ArrayList<>(testUser.QuestionsAndAnswers.get(testUser.CurQuestion)).get(0);
-        var actualRight = RequestHandler.GetAnswer(rightAnswer, testUser);
+        var actualRight = requestHandler.getAnswer(rightAnswer, testUser);
 
         Assert.assertTrue(rightAnswers.contains(actualRight.get(0)));
     }
@@ -65,7 +65,7 @@ public class RequestHandlerTest {
         testUser1.CurQuestion = testUser1.AllQuestions.get(0);
         ArrayList<String> rightAnswers = AnswerReader.ParseAnswersFromFile("Answers/Right.txt");
 
-        var actualRight = RequestHandler.GetAnswer("неверныйОтвет", testUser1);
+        var actualRight = requestHandler.getAnswer("неверныйОтвет", testUser1);
 
         Assert.assertFalse(rightAnswers.contains(actualRight.get(0)));
     }
