@@ -8,7 +8,7 @@ import java.util.Random;
 /**
  * Хранилище возможных ответов бота на какие-либо запросы пользователя(Будет дополняться).
  */
-class AnswerRepository {
+public class AnswerRepository {
     private ArrayList<String> HelloAnswers;
     private ArrayList<String> RightAnswers;
     private ArrayList<String> WrongAnswers;
@@ -16,7 +16,7 @@ class AnswerRepository {
     private static Random random = new Random();
 
 
-    AnswerRepository(){
+    public AnswerRepository(){
         HelloAnswers = AnswerReader.ParseAnswersFromFile("Answers/Hello.txt");
         RightAnswers = AnswerReader.ParseAnswersFromFile("Answers/Right.txt");
         WrongAnswers = AnswerReader.ParseAnswersFromFile("Answers/Wrong.txt");

@@ -1,14 +1,23 @@
 package iomanager;
+import java.lang.reflect.Array;
 import java.net.*;
 import java.io.*;
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
-
+/**
+ * Класс отвечает за парсинг веб-страниц с вопросами для викторины
+ */
 public class QuestionsFromSite {
-    public static final int NumberOfPages = 299;
+    public static final int NumberOfPages = 299; //Колчисество страниц на сайте, откуда берутся вопросы
 
+    /**
+     * Функция, которая берет с веб-страницы с данным номером все вопросы и варианты ответов на каждый вопрос.
+     * @param pageNumber
+     * @return Map, в котором лежат вопросы и отсветы на них.
+     * @throws Exception
+     */
     public static Map<String, Set<String>> quizParser(int pageNumber) throws Exception {
 
         Map<String, Set<String>> questionAndAnswer = new HashMap<>();
@@ -29,70 +38,91 @@ public class QuestionsFromSite {
         in.close();
 
         String quizText = quizSiteText.toString();
-        String categories = quizText.substring(quizText.indexOf("q-list__table") + "q-list__table".length() + 2);
-        String cats = categories.substring(0, categories.indexOf("</table>"));
+        String categoriesFromSite = quizText.substring(quizText.indexOf("q-list__table") + "q-list__table".length() + 2);
+        String categories = categoriesFromSite.substring(0, categoriesFromSite.indexOf("</table>"));
 
+        //Меняем все html ковычки на обычные.
         Pattern quotPattern = Pattern.compile("&quot;");
-        Matcher quotMatcher = quotPattern.matcher(cats);
-        cats = quotMatcher.replaceAll("");
+        Matcher quotMatcher = quotPattern.matcher(categories);
+        categories = quotMatcher.replaceAll("");
 
+        //Ищем вопросы.
         Pattern questionPattern = Pattern.compile("<a href.+?<\\/a>");
-        Matcher m = questionPattern.matcher(cats);
+        Matcher questionMatcher = questionPattern.matcher(categories);
 
-        Pattern varianstsPattern = Pattern.compile("quiz-answers.+?<");
-        Matcher variantsMatcher = varianstsPattern.matcher(cats);
+        //Ищем варианты ответов.
+        Pattern variantsPattern = Pattern.compile("quiz-answers.+?<");
+        Matcher variantsMatcher = variantsPattern.matcher(categories);
 
-        ArrayList<String> answers = parseAnswers(cats);
+        ArrayList<String> answers = parseAnswers(categories);
 
         int counter = 0;
-        while (m.find() && variantsMatcher.find() && counter < answers.size()) {
-            String curLine = m.group();
+        //Идем по всем найденным вопросам и ответам и записываем их в Map
+        while (questionMatcher.find() && variantsMatcher.find() && counter < answers.size()) {
+            String curLine = questionMatcher.group();
             String curVariants = variantsMatcher.group();
 
             String quest = curLine.substring(curLine.indexOf(">") + 1, curLine.lastIndexOf("<"));
             String variants = curVariants.substring(curVariants.indexOf(":") + 2, curVariants.lastIndexOf("<"));
-            variants = variants.replaceAll("\\s+", " ");
-            variants = variants.replaceAll(", ", ",");
-
-            if (variants.charAt(variants.length() - 1) == ' ') {
-                variants = variants.substring(0, variants.length() - 1);
-            }
 
             String curAnswer = answers.get(counter);
             ArrayList<String> variantsList = createVariantsList(variants, curAnswer);
 
             Set<String> answerSet = new HashSet<>();
-            answerSet.add(curAnswer.toLowerCase());
-            questionAndAnswer.put(quest + variantsList, answerSet);
+            String rightAnsNumber = Integer.toString(variantsList.indexOf(curAnswer) + 1);
+            answerSet.add(rightAnsNumber);
+            questionAndAnswer.put(quest + addNumbers(variantsList), answerSet);
             counter++;
         }
 
         return questionAndAnswer;
     }
 
+    /**
+     * Функция отвечает за создание списка вариантов ответа на данный вопрос.
+     * @param variants
+     * @param curAnswer
+     * @return Список вариантов ответа.
+     */
     private static ArrayList<String> createVariantsList(String variants, String curAnswer) {
+        ArrayList<String> resultList = new ArrayList<>();
         ArrayList<String> variantsList = new ArrayList<>(Arrays.asList(variants.split(",")));
         variantsList.add(curAnswer);
-
-        for (int k = 0; k < variantsList.size(); k++) {
-            var curVariant = variantsList.get(k);
-            if (curVariant.charAt(0) == ' '){
-                variantsList.remove(k);
-                variantsList.add(curVariant.substring(1));
-            }
-        }
-
         Collections.shuffle(variantsList);
-        return variantsList;
+
+        for (String curVariant:variantsList)
+            resultList.add(curVariant.trim());
+
+        return resultList;
     }
 
-    private static ArrayList<String> parseAnswers(String cats) {
+    /**
+     * Функция добавляет к вариантам ответа номера.
+     * @param variantsList
+     * @return Измененный список ответов.
+     */
+    private static ArrayList<String> addNumbers(ArrayList<String> variantsList) {
+        ArrayList<String> resultVariantsList = new ArrayList<>();
+
+        for (int i = 0; i < variantsList.size(); i++)
+            resultVariantsList.add((i + 1) + ") " + variantsList.get(i));
+
+        return resultVariantsList;
+    }
+
+    /**
+     * Функция создает список правильных ответов на все вопросы текущей веб-страницы.
+     * @param categoriesBlock
+     * @return Список правильных ответов.
+     */
+    private static ArrayList<String> parseAnswers(String categoriesBlock) {
         ArrayList<String> outputList = new ArrayList<>();
 
         Pattern answerPattern = Pattern.compile("<td>.+?<\\/td>");
-        Matcher answerMatcher = answerPattern.matcher(cats);
+        Matcher answerMatcher = answerPattern.matcher(categoriesBlock);
 
         int counter = 0;
+
         while(answerMatcher.find()) {
             counter++;
             String curLineAns = answerMatcher.group();

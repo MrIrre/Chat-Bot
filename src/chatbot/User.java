@@ -17,12 +17,12 @@ public class User {
     private enums.Version Version;
     private boolean WinState = true;
 
-    Status State = Status.StartGame;
-    Map<String, Set<String>> QuestionsAndAnswers;
-    ArrayList<String> AllQuestions;
-    String CurQuestion;
+    public Status State = Status.StartGame;
+    public Map<String, Set<String>> QuestionsAndAnswers;
+    public ArrayList<String> AllQuestions;
+    public String CurQuestion;
 
-    User(String id, Version version) {
+    public User(String id, Version version) {
         Id = id;
         Version = version;
     }
