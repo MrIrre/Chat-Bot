@@ -20,7 +20,7 @@ public class Console implements Input, Output {
     }
 
     @Override
-    public void print(ArrayList<String> outputStrings) {
+    public void print(String userId, ArrayList<String> outputStrings) {
         for (String line: outputStrings){
             System.out.println(line);
         }

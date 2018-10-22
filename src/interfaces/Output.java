@@ -6,5 +6,5 @@ import java.util.ArrayList;
  * Интерфейс для реализации вывода ответов на разных UI.
  */
 public interface Output {
-    void print(ArrayList<String> outputStrings);
+    void print(String userId, ArrayList<String> outputStrings);
 }

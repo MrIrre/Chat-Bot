@@ -41,7 +41,7 @@ public class MainLoop {
 
             User curUser = users.get(curRequest.getUserId());
             ArrayList<String> curAnswer = requestHandler.getAnswer(curRequest.getRequest(), curUser);
-            output.print(curAnswer);
+            output.print(curUser.getId(), curAnswer);
         }
     }
 }
