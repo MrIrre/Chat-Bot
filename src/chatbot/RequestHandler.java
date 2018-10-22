@@ -31,7 +31,7 @@ public class RequestHandler {
                 answerList.add(AnswerRepository.getWrongRequestAnswerString());
             }
             else{
-                answerList.add(AnswerRepository.getRandomHello());
+                answerList.add(AnswerRepository.getRandomAnswer(AnswerRepository.helloAnswers));
                 user.state = Status.AnswerTheQuestion;
                 user.questionsAndAnswers =
                         QuestionsFromSite.quizParser(random.nextInt(QuestionsFromSite.NUMBER_OF_PAGES));
@@ -93,11 +93,11 @@ public class RequestHandler {
      */
     ArrayList<String> checkAnswer(User user, ArrayList<String> answerList, String inputedAnswer) {
         if (user.questionsAndAnswers.get(user.curQuestion).contains(inputedAnswer.toLowerCase())){
-            answerList.add(AnswerRepository.getRandomRightAnswer());
+            answerList.add(AnswerRepository.getRandomAnswer(AnswerRepository.rightAnswers));
             user.scoreUp();
         }
         else {
-            answerList.add(AnswerRepository.getRandomWrongAnswer());
+            answerList.add(AnswerRepository.getRandomAnswer(AnswerRepository.wrongAnswers));
             user.healthDown();
         }
 

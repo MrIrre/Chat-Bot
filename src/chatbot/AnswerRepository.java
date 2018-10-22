@@ -9,22 +9,14 @@ import java.util.Random;
  * Хранилище возможных ответов бота на какие-либо запросы пользователя(Будет дополняться).
  */
 public class AnswerRepository {
-    private static ArrayList<String> helloAnswers = AnswerReader.ParseAnswersFromFile("Answers/Hello.txt");
-    private static ArrayList<String> rightAnswers = AnswerReader.ParseAnswersFromFile("Answers/Right.txt");
-    private static ArrayList<String> wrongAnswers = AnswerReader.ParseAnswersFromFile("Answers/Wrong.txt");
+    public static ArrayList<String> helloAnswers = AnswerReader.ParseAnswersFromFile("Answers/Hello.txt");
+    public static ArrayList<String> rightAnswers = AnswerReader.ParseAnswersFromFile("Answers/Right.txt");
+    public static ArrayList<String> wrongAnswers = AnswerReader.ParseAnswersFromFile("Answers/Wrong.txt");
 
     private static Random random = new Random();
 
-    public static String getRandomHello(){
-        return helloAnswers.get(random.nextInt(helloAnswers.size()));
-    }
-
-    public static String getRandomRightAnswer(){
-        return rightAnswers.get(random.nextInt(rightAnswers.size()));
-    }
-
-    public static String getRandomWrongAnswer(){
-        return wrongAnswers.get(random.nextInt(wrongAnswers.size()));
+    public static String getRandomAnswer(ArrayList<String> answers){
+        return answers.get(random.nextInt(answers.size()));
     }
 
     public static String getScoreString() {
