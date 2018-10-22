@@ -24,7 +24,7 @@ public class MainLoop {
         while (true){
             Request inputedRequest = input.getRequest();
 
-            if (!inputedRequest.getRequest().equals("")){
+            if (inputedRequest != null && !inputedRequest.getRequest().equals("")){
                 requests.push(inputedRequest);
             }
 
