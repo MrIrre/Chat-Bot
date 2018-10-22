@@ -10,13 +10,14 @@ import java.util.ArrayList;
 
 public class RequestHandlerTest {
     public RequestHandler requestHandler = new RequestHandler();
+    private final String CONSOLE_ID = "ConsoleUser";
 
     @Test
     public void correctStartCase() throws Exception {
         ArrayList<String> actual;
 
         User testUser1 = createUser();
-        User testUser2 = new User("ConsoleUser", Version.Console);
+        User testUser2 = new User(CONSOLE_ID, Version.Console);
 
         String testInputedString = "/start";
         ArrayList<String> helloAnswers = AnswerReader.ParseAnswersFromFile("Answers/Hello.txt");
