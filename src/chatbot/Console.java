@@ -12,10 +12,11 @@ import java.util.Scanner;
  */
 public class Console implements Input, Output {
     private static final Scanner INPUT = new Scanner(System.in);
+    private static final String CONSOLE_ID = "ConsoleUser";
 
     @Override
     public Request getRequest() {
-        return new Request("ConsoleUser", INPUT.nextLine(), Version.Console);
+        return new Request(CONSOLE_ID, INPUT.nextLine(), Version.Console);
     }
 
     @Override
