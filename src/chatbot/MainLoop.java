@@ -10,9 +10,9 @@ import java.util.*;
  * Главный цикл чат-бота, который на каждой итерации обрабатывает запрос пользователя.
  */
 public class MainLoop {
-    private static Map<String, User> Users = new HashMap<>();
-    private static Deque<Request> Requests = new ArrayDeque<>();
-    private static RequestHandler RequestHandler = new RequestHandler();
+    private static Map<String, User> users = new HashMap<>();
+    private static Deque<Request> requests = new ArrayDeque<>();
+    private static RequestHandler requestHandler = new RequestHandler();
 
     /**
      * Запуск главного цикла.
@@ -25,22 +25,22 @@ public class MainLoop {
             Request inputedRequest = input.getRequest();
 
             if (!inputedRequest.getRequest().equals("")){
-                Requests.push(inputedRequest);
+                requests.push(inputedRequest);
             }
 
-            if (Requests.isEmpty()){
+            if (requests.isEmpty()){
                 continue;
             }
 
-            Request curRequest = Requests.pop();
+            Request curRequest = requests.pop();
 
-            if (!Users.containsKey(curRequest.getUserId())){
+            if (!users.containsKey(curRequest.getUserId())){
                 Version curUserVersion = curRequest.getVersion();
-                Users.put(curRequest.getUserId(), new User(curRequest.getUserId(), curUserVersion));
+                users.put(curRequest.getUserId(), new User(curRequest.getUserId(), curUserVersion));
             }
 
-            User curUser = Users.get(curRequest.getUserId());
-            ArrayList<String> curAnswer = RequestHandler.getAnswer(curRequest.getRequest(), curUser);
+            User curUser = users.get(curRequest.getUserId());
+            ArrayList<String> curAnswer = requestHandler.getAnswer(curRequest.getRequest(), curUser);
             output.print(curAnswer);
         }
     }

@@ -11,67 +11,67 @@ import java.util.Set;
  * Класс пользователя. Хранит в себе всю необходимую информацию о данном пользователе.
  */
 public class User {
-    private int Score = 0;
-    private int Health = 3;
-    private String Id;
-    private enums.Version Version;
-    private boolean WinState = true;
+    private int score = 0;
+    private int health = 3;
+    private String id;
+    private enums.Version version;
+    private boolean winState = true;
 
-    public Status State = Status.StartGame;
-    public Map<String, Set<String>> QuestionsAndAnswers;
-    public ArrayList<String> AllQuestions;
-    public String CurQuestion;
+    public Status state = Status.StartGame;
+    public Map<String, Set<String>> questionsAndAnswers;
+    public ArrayList<String> allQuestions;
+    public String curQuestion;
 
     public User(String id, Version version) {
-        Id = id;
-        Version = version;
+        this.id = id;
+        this.version = version;
     }
 
     public void healthDown() {
-        Health--;
+        health--;
     }
 
     public void scoreUp() {
-        Score++;
+        score++;
     }
 
     public int getHealth() {
-        return Health;
+        return health;
     }
 
     public int getScore() {
-        return Score;
+        return score;
     }
 
     public String getId() {
-        return Id;
+        return id;
     }
 
     public Version getVersion(){
-        return Version;
+        return version;
     }
 
     public void changeWinState(){
-        WinState = false;
+        winState = false;
     }
 
     public boolean isWin(){
-        return WinState;
+        return winState;
     }
 
     public void resetScore(){
-        Score = 0;
+        score = 0;
     }
 
     public void resetHealth(){
-        Health = 3;
+        health = 3;
     }
 
     public void resetUser() {
-        AllQuestions = null;
-        QuestionsAndAnswers = null;
-        CurQuestion = null;
-        WinState = true;
+        allQuestions = null;
+        questionsAndAnswers = null;
+        curQuestion = null;
+        winState = true;
         resetHealth();
         resetScore();
     }

@@ -9,25 +9,25 @@ import enums.Version;
  *     3. Откуда пришёл запрос(Консоль, пока что);
  */
 public class Request {
-    private String UserId;
-    private String InputRequest;
-    private enums.Version Version;
+    private String userId;
+    private String requestString;
+    private enums.Version version;
 
     Request(String userId, String request, Version version){
-        UserId = userId;
-        InputRequest = request;
-        Version = version;
+        this.userId = userId;
+        requestString = request;
+        this.version = version;
     }
 
     public String getUserId(){
-        return UserId;
+        return userId;
     }
 
     public String getRequest() {
-        return InputRequest;
+        return requestString;
     }
 
     public Version getVersion() {
-        return Version;
+        return version;
     }
 }

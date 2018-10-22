@@ -14,7 +14,7 @@ import static org.hamcrest.core.Is.is;
 
 
 public class QuestionsReaderTest {
-    private String TestFilePath = "Tests/TestsForQuestionsReader.txt";
+    private String testFilePath = "Tests/TestsForQuestionsReader.txt";
 
     @Test
     public void getDataFromFile() {
@@ -35,7 +35,7 @@ public class QuestionsReaderTest {
         expectedMap.put("Какие есть имена?", secondStringAnswers);
 
         Map<String, Set<String>> actualMap =
-                QuestionsReader.GetDataFromFile(TestFilePath);
+                QuestionsReader.GetDataFromFile(testFilePath);
 
         Assert.assertThat(expectedMap, is(actualMap));
     }

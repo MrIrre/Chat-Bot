@@ -9,7 +9,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 
 public class RequestHandlerTest {
-    public RequestHandler RequestHandler = new RequestHandler();
+    public RequestHandler requestHandler = new RequestHandler();
 
     @Test
     public void correctStartCase() throws Exception {
@@ -21,10 +21,10 @@ public class RequestHandlerTest {
         String testInputedString = "/start";
         ArrayList<String> helloAnswers = AnswerReader.ParseAnswersFromFile("Answers/Hello.txt");
 
-        actual = RequestHandler.getAnswer(testInputedString, testUser2);
+        actual = requestHandler.getAnswer(testInputedString, testUser2);
 
         Assert.assertTrue(helloAnswers.contains(actual.get(0))
-                || testUser1.AllQuestions.contains(actual.get(1)));
+                || testUser1.allQuestions.contains(actual.get(1)));
     }
 
     @Test
@@ -37,10 +37,10 @@ public class RequestHandlerTest {
         String testInputedString = "abracadabra";
         String wrongRequestAnswer = AnswerRepository.getWrongRequestAnswerString();
 
-        actual = RequestHandler.getAnswer(testInputedString, testUser2);
+        actual = requestHandler.getAnswer(testInputedString, testUser2);
 
         Assert.assertEquals(wrongRequestAnswer, actual.get(0));
-        Assert.assertSame(testUser1.State, testUser2.State);
+        Assert.assertSame(testUser1.state, testUser2.state);
         Assert.assertSame(testUser1.getHealth(), testUser2.getHealth());
         Assert.assertSame(testUser1.getScore(), testUser2.getScore());
     }
@@ -49,11 +49,11 @@ public class RequestHandlerTest {
     public void rightAnswerCase() throws Exception {
         User testUser = createUser();
 
-        testUser.CurQuestion = testUser.AllQuestions.get(0);
+        testUser.curQuestion = testUser.allQuestions.get(0);
         ArrayList<String> rightAnswers = AnswerReader.ParseAnswersFromFile("Answers/Right.txt");
 
-        String rightAnswer = new ArrayList<>(testUser.QuestionsAndAnswers.get(testUser.CurQuestion)).get(0);
-        var actualRight = RequestHandler.getAnswer(rightAnswer, testUser);
+        String rightAnswer = new ArrayList<>(testUser.questionsAndAnswers.get(testUser.curQuestion)).get(0);
+        var actualRight = requestHandler.getAnswer(rightAnswer, testUser);
 
         Assert.assertTrue(rightAnswers.contains(actualRight.get(0)));
     }
@@ -62,19 +62,19 @@ public class RequestHandlerTest {
     public void wrongAnswerCase() throws Exception{
         User testUser1 = createUser();
 
-        testUser1.CurQuestion = testUser1.AllQuestions.get(0);
+        testUser1.curQuestion = testUser1.allQuestions.get(0);
         ArrayList<String> rightAnswers = AnswerReader.ParseAnswersFromFile("Answers/Right.txt");
 
-        var actualRight = RequestHandler.getAnswer("неверныйОтвет", testUser1);
+        var actualRight = requestHandler.getAnswer("неверныйОтвет", testUser1);
 
         Assert.assertFalse(rightAnswers.contains(actualRight.get(0)));
     }
 
     private User createUser() throws Exception {
         User createdUser = new User("ConsoleUser", Version.Console);
-        createdUser.State = Status.AnswerTheQuestion;
-        createdUser.QuestionsAndAnswers = QuestionsFromSite.quizParser(0);
-        createdUser.AllQuestions = new ArrayList<>(createdUser.QuestionsAndAnswers.keySet());
+        createdUser.state = Status.AnswerTheQuestion;
+        createdUser.questionsAndAnswers = QuestionsFromSite.quizParser(0);
+        createdUser.allQuestions = new ArrayList<>(createdUser.questionsAndAnswers.keySet());
         return createdUser;
     }
 }

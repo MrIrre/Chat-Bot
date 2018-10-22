@@ -10,8 +10,8 @@ import java.util.Random;
  * Логика бота. Обработка текущего запроса, в зависимости от состояния пользователя, отправившего данный запрос.
  */
 public class RequestHandler {
-    private final String DelimeterBetweenQuestions = "==============================================";
-    private final Random Random = new Random();
+    private final String delimeterBetweenQuestions = "==============================================";
+    private final Random random = new Random();
 
     /**
      * Метод, обрабатывающий запрос, который возвращает ответ на данный запрос.
@@ -26,18 +26,18 @@ public class RequestHandler {
         Если пользователь только начал игру, то выдаётся строка приветствия, и его классу выдаются вопросы.
         Также меняется состояние пользователя на игровое.
          */
-        if (user.State == Status.StartGame) {
+        if (user.state == Status.StartGame) {
             if (!inputString.equals("/start")){
                 answerList.add(AnswerRepository.getWrongRequestAnswerString());
             }
             else{
                 answerList.add(AnswerRepository.getRandomHello());
-                user.State = Status.AnswerTheQuestion;
-                user.QuestionsAndAnswers =
-                        QuestionsFromSite.quizParser(Random.nextInt(QuestionsFromSite.NumberOfPages));
-                user.AllQuestions = new ArrayList<>(user.QuestionsAndAnswers.keySet());
-                user.CurQuestion = user.AllQuestions.get(Random.nextInt(user.AllQuestions.size()));
-                answerList.add(user.CurQuestion);
+                user.state = Status.AnswerTheQuestion;
+                user.questionsAndAnswers =
+                        QuestionsFromSite.quizParser(random.nextInt(QuestionsFromSite.NUMBER_OF_PAGES));
+                user.allQuestions = new ArrayList<>(user.questionsAndAnswers.keySet());
+                user.curQuestion = user.allQuestions.get(random.nextInt(user.allQuestions.size()));
+                answerList.add(user.curQuestion);
             }
         }
 
@@ -46,7 +46,7 @@ public class RequestHandler {
         Изменение количества очков, жизней у пользователя.
         Проверка на проигрыш.
          */
-        else if (user.State == Status.AnswerTheQuestion){
+        else if (user.state == Status.AnswerTheQuestion){
             answerList = checkAnswer(user, answerList, inputString);
 
             answerList.add(AnswerRepository.getScoreString() + user.getScore());
@@ -54,15 +54,15 @@ public class RequestHandler {
 
             if (user.getHealth() <= 0){
                 user.changeWinState();
-                user.State = Status.GameOver;
+                user.state = Status.GameOver;
                 answerList.add(AnswerRepository.getHPEndedString());
             }
-            else if (user.AllQuestions.isEmpty()){
-                user.State = Status.GameOver;
+            else if (user.allQuestions.isEmpty()){
+                user.state = Status.GameOver;
                 answerList.add(AnswerRepository.getAnswerEndedString());
             }
 
-            if (user.State == Status.GameOver){
+            if (user.state == Status.GameOver){
                 if (user.isWin()){
                     answerList.add(AnswerRepository.getWinString());
                 }
@@ -70,14 +70,14 @@ public class RequestHandler {
                     answerList.add(AnswerRepository.getLoseString());
                 }
 
-                user.State = Status.StartGame;
+                user.state = Status.StartGame;
                 user.resetUser();
                 answerList.add(AnswerRepository.getGameOverString());
             }
             else{
-                user.CurQuestion = user.AllQuestions.get(Random.nextInt(user.AllQuestions.size()));
-                answerList.add(DelimeterBetweenQuestions);
-                answerList.add(user.CurQuestion);
+                user.curQuestion = user.allQuestions.get(random.nextInt(user.allQuestions.size()));
+                answerList.add(delimeterBetweenQuestions);
+                answerList.add(user.curQuestion);
             }
         }
 
@@ -92,7 +92,7 @@ public class RequestHandler {
      * @return Лист ответа со строками, которые зависят от правильности ответа
      */
     ArrayList<String> checkAnswer(User user, ArrayList<String> answerList, String inputedAnswer) {
-        if (user.QuestionsAndAnswers.get(user.CurQuestion).contains(inputedAnswer.toLowerCase())){
+        if (user.questionsAndAnswers.get(user.curQuestion).contains(inputedAnswer.toLowerCase())){
             answerList.add(AnswerRepository.getRandomRightAnswer());
             user.scoreUp();
         }
@@ -101,8 +101,8 @@ public class RequestHandler {
             user.healthDown();
         }
 
-        user.AllQuestions.remove(user.CurQuestion);
-        user.QuestionsAndAnswers.remove(user.CurQuestion);
+        user.allQuestions.remove(user.curQuestion);
+        user.questionsAndAnswers.remove(user.curQuestion);
 
         return answerList;
     }

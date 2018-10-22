@@ -9,7 +9,7 @@ import java.util.regex.Matcher;
  * Класс отвечает за парсинг веб-страниц с вопросами для викторины
  */
 public class QuestionsFromSite {
-    public static final int NumberOfPages = 299; //Количество страниц на сайте, откуда берутся вопросы
+    public static final int NUMBER_OF_PAGES = 299; //Количество страниц на сайте, откуда берутся вопросы
 
     /**
      * Функция, которая берет с веб-страницы с данным номером все вопросы и варианты ответов на каждый вопрос.
