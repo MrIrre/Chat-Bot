@@ -1,6 +1,5 @@
 package chatbot;
 
-import enums.Version;
 import interfaces.Input;
 import interfaces.Output;
 
@@ -16,7 +15,7 @@ public class Console implements Input, Output {
 
     @Override
     public Request getRequest() {
-        return new Request(CONSOLE_ID, INPUT.nextLine(), Version.Console);
+        return new Request(CONSOLE_ID, INPUT.nextLine());
     }
 
     @Override
