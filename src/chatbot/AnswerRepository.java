@@ -9,9 +9,9 @@ import java.util.Random;
  * Хранилище возможных ответов бота на какие-либо запросы пользователя(Будет дополняться).
  */
 public class AnswerRepository {
-    public static ArrayList<String> helloAnswers = AnswerReader.ParseAnswersFromFile("Answers/Hello.txt");
-    public static ArrayList<String> rightAnswers = AnswerReader.ParseAnswersFromFile("Answers/Right.txt");
-    public static ArrayList<String> wrongAnswers = AnswerReader.ParseAnswersFromFile("Answers/Wrong.txt");
+    public static ArrayList<String> helloAnswers = AnswerReader.ParseAnswersFromFile("FilesForBot/Answers/Hello.txt");
+    public static ArrayList<String> rightAnswers = AnswerReader.ParseAnswersFromFile("FilesForBot/Answers/Right.txt");
+    public static ArrayList<String> wrongAnswers = AnswerReader.ParseAnswersFromFile("FilesForBot/Answers/Wrong.txt");
 
     private static Random random = new Random();
 
@@ -49,5 +49,11 @@ public class AnswerRepository {
 
     public static String getWrongRequestAnswerString(){
         return "Сорян, не понял. Давай ещё раз.";
+    }
+
+    public static String getGamesString() {
+        return "Выбирай игру: \n" +
+                "   1. Викторина\n" +
+                "   2. Виселица";
     }
 }
