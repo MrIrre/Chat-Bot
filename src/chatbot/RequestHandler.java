@@ -1,108 +1,60 @@
 package chatbot;
 
 import enums.Status;
-import iomanager.QuestionsFromSite;
+import games.HangmanLogic;
+import games.QuizLogic;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 /**
  * Логика бота. Обработка текущего запроса, в зависимости от состояния пользователя, отправившего данный запрос.
  */
 public class RequestHandler {
-    private final String delimeterBetweenQuestions = "==============================================";
-    private final Random random = new Random();
-
     /**
      * Метод, обрабатывающий запрос, который возвращает ответ на данный запрос.
      * @param inputString Строка запроса.
      * @param user Пользователь, запрос которого, обрабатывается.
      * @return Строки с ответом.
      */
-    public ArrayList<String> getAnswer(String inputString, User user) throws Exception {
+    ArrayList<String> getAnswer(String inputString, User user) throws Exception {
         ArrayList<String> answerList = new ArrayList<>();
 
         /*
-        Если пользователь только начал игру, то выдаётся строка приветствия, и его классу выдаются вопросы.
+        Если пользователь только начал игру, то выдаётся строка приветствия.
         Также меняется состояние пользователя на игровое.
          */
-        if (user.state == Status.StartGame) {
+
+        if (user.state == Status.Starting) {
             if (!inputString.equals("/start")){
                 answerList.add(AnswerRepository.getWrongRequestAnswerString());
             }
             else{
                 answerList.add(AnswerRepository.getRandomAnswer(AnswerRepository.helloAnswers));
-                user.state = Status.AnswerTheQuestion;
-                user.questionsAndAnswers =
-                        QuestionsFromSite.quizParser(random.nextInt(QuestionsFromSite.NUMBER_OF_PAGES));
-                user.allQuestions = new ArrayList<>(user.questionsAndAnswers.keySet());
-                user.curQuestion = user.allQuestions.get(random.nextInt(user.allQuestions.size()));
-                answerList.add(user.curQuestion);
+                user.state = Status.ChoosingGame;
+                answerList.add(AnswerRepository.getGamesString());
+            }
+        }
+
+        else if (user.state == Status.ChoosingGame){
+            if (inputString.equals("1")){
+                user.game = new QuizLogic();
+                user.state = Status.Playing;
+            }
+            else if (inputString.equals("2")){
+                user.game = new HangmanLogic();
+                user.state = Status.Playing;
+            }
+            else {
+                answerList.add(AnswerRepository.getWrongRequestAnswerString());
             }
         }
 
         /*
-        Проверка ответа от пользователя.
-        Изменение количества очков, жизней у пользователя.
-        Проверка на проигрыш.
+         * Если пользователь играет, то его запросы обрабатывает определённая игра.
          */
-        else if (user.state == Status.AnswerTheQuestion){
-            answerList = checkAnswer(user, answerList, inputString);
-
-            answerList.add(AnswerRepository.getScoreString() + user.getScore());
-            answerList.add(AnswerRepository.getHealthString() + user.getHealth());
-
-            if (user.getHealth() <= 0){
-                user.changeWinState();
-                user.state = Status.GameOver;
-                answerList.add(AnswerRepository.getHPEndedString());
-            }
-            else if (user.allQuestions.isEmpty()){
-                user.state = Status.GameOver;
-                answerList.add(AnswerRepository.getAnswerEndedString());
-            }
-
-            if (user.state == Status.GameOver){
-                if (user.isWin()){
-                    answerList.add(AnswerRepository.getWinString());
-                }
-                else{
-                    answerList.add(AnswerRepository.getLoseString());
-                }
-
-                user.state = Status.StartGame;
-                user.resetUser();
-                answerList.add(AnswerRepository.getGameOverString());
-            }
-            else{
-                user.curQuestion = user.allQuestions.get(random.nextInt(user.allQuestions.size()));
-                answerList.add(delimeterBetweenQuestions);
-                answerList.add(user.curQuestion);
-            }
+        if (user.state == Status.Playing){
+            answerList.addAll(user.game.handleGameRequest(inputString, user));
         }
-
-        return answerList;
-    }
-
-    /**
-     * Метод проверяет является ли ответ на вопрос правильным и удаляет вопрос из списка вопросов пользователя.
-     * @param user Данный пользователь
-     * @param answerList Лист строк в ответ на данный запрос
-     * @param inputedAnswer Введённый ответ на вопрос
-     * @return Лист ответа со строками, которые зависят от правильности ответа
-     */
-    ArrayList<String> checkAnswer(User user, ArrayList<String> answerList, String inputedAnswer) {
-        if (user.questionsAndAnswers.get(user.curQuestion).contains(inputedAnswer.toLowerCase())){
-            answerList.add(AnswerRepository.getRandomAnswer(AnswerRepository.rightAnswers));
-            user.scoreUp();
-        }
-        else {
-            answerList.add(AnswerRepository.getRandomAnswer(AnswerRepository.wrongAnswers));
-            user.healthDown();
-        }
-
-        user.allQuestions.remove(user.curQuestion);
-        user.questionsAndAnswers.remove(user.curQuestion);
 
         return answerList;
     }
