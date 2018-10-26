@@ -15,7 +15,6 @@ public class QuestionsFromSite {
      * Функция, которая берет с веб-страницы с данным номером все вопросы и варианты ответов на каждый вопрос.
      * @param pageNumber - номер страницы
      * @return Map, в котором лежат вопросы и отсветы на них.
-     * @throws Exception
      */
     public static Map<String, Set<String>> quizParser(int pageNumber) throws Exception {
 
