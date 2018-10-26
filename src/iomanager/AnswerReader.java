@@ -1,12 +1,10 @@
 package iomanager;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 /**
- * Парсер вариаций ответов для пользователя.
+ * Построчный парсер. На данный момент используется для парса слов виселицы и реплик чат-бота.
  */
 public class AnswerReader {
     public static ArrayList<String> ParseAnswersFromFile(String fileName){
