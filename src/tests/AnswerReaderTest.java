@@ -19,7 +19,7 @@ public class AnswerReaderTest {
         expected.add("Хай, мой друг!");
         expected.add("Салют, мсье!");
 
-        ArrayList<String> actual = AnswerReader.ParseAnswersFromFile("Answers/Hello.txt");
+        ArrayList<String> actual = AnswerReader.ParseAnswersFromFile("FilesForBot/Answers/Hello.txt");
 
         Assert.assertThat(expected, is(actual));
     }
