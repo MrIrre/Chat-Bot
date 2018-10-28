@@ -22,6 +22,23 @@ public class QuizLogic implements Game {
     private ArrayList<String> allQuestions; // Лист для рандомизации текущего вопроса
     private String curQuestion;
 
+    //Все геттеры, находящиеся ниже нужны для тестирования
+    public Map<String, Set<String>> getQuestionsAndAnswers() {
+        return questionsAndAnswers;
+    }
+
+    public String getCurQuestion() {
+        return curQuestion;
+    }
+
+    public int getHealth() {
+        return health;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
     @Override
     public ArrayList<String> handleGameRequest(String inputString, User user) throws Exception {
         answerList = new ArrayList<>();

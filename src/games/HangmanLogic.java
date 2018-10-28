@@ -20,6 +20,19 @@ public class HangmanLogic implements Game {
     private ArrayList<String> answerList;
     private Set<String> usedLetters = new HashSet<>();
 
+    // Нужно для тестов
+    public String getCurWord() {
+        return curWord;
+    }
+
+    public int getHealth(){
+        return health;
+    }
+
+    public String getWordForUser() {
+        return wordForUser.toString();
+    }
+
     @Override
     public ArrayList<String> handleGameRequest(String inputString, User user) {
         answerList = new ArrayList<>();
