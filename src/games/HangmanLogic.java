@@ -12,7 +12,6 @@ import java.util.Random;
 import java.util.Set;
 
 public class HangmanLogic implements Game {
-//    private final String delimeterBetweenQuestions = "==============================================";
     private final Random random = new Random();
     private int health = 10;
     private int score = 0;
@@ -29,14 +28,12 @@ public class HangmanLogic implements Game {
             giveRandomWord();
         }
         else{
-            /*
-             Проверка ответа от пользователя.
-             Изменение количества очков, жизней у пользователя.
-             Проверка на проигрыш.
-            */
             inputString = inputString.toLowerCase();
 
             if (!checkLetterValidation(inputString)){
+                /*
+                Проверка ответа от пользователя на валидность.
+                 */
                 answerList.add("Введи одну букву русского алфавита, пожалуйста)");
             }
             else if (usedLetters.contains(inputString)){
@@ -50,9 +47,9 @@ public class HangmanLogic implements Game {
                 Проверка ответа от пользователя.
                 Изменение количества его жизней.
                 Проверка на проигрыш.
-                */
+                 */
                 if(curWord.contains(inputString)){
-                    char curLetter = inputString.toLowerCase().charAt(0);
+                    char curLetter = inputString.charAt(0);
                     addLetterInWord(curLetter);
                     answerList.add(AnswerRepository.getRandomAnswer(AnswerRepository.rightAnswers));
                 }
