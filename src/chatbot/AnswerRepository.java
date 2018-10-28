@@ -56,4 +56,12 @@ public class AnswerRepository {
                 "   1. Викторина\n" +
                 "   2. Виселица";
     }
+
+    public static String getExitString(){
+        return "Вышел.";
+    }
+
+    public static String getWrongStartRequestAnswerString(){
+        return "Введи, пожалуйста, /start для начала)";
+    }
 }
