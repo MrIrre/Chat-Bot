@@ -29,6 +29,10 @@ public class Quizzz {
         consoleArgOption.setRequired(false);
         options.addOption(consoleArgOption);
 
+        Option helpOption = new Option("h", "help", false, "see help");
+        helpOption.setRequired(false);
+        options.addOption(helpOption);
+
         CommandLineParser parser = new DefaultParser();
         HelpFormatter formatter = new HelpFormatter();
         CommandLine cmd;
@@ -38,13 +42,19 @@ public class Quizzz {
         try {
             cmd = parser.parse(options, args);
             if (cmd.getOptions().length == 0){
-                System.out.println("See help.");
+                System.out.println("See help. Quizzz.java [-h or --help]");
                 System.exit(1);
             }
 
             if (cmd.getOptions().length > 1){
                 System.out.println("Enter ONLY one argument!");
+                System.out.println("See help. Quizzz.java [-h or --help]");
                 System.exit(1);
+            }
+
+            if (cmd.hasOption("h")){
+                formatter.printHelp("Quizzz.java", options);
+                System.exit(0);
             }
 
             if (cmd.hasOption("vk")){
