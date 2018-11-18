@@ -1,7 +1,7 @@
 package chatbot;
 
-import interfaces.Input;
-import interfaces.Output;
+import enums.RequestFrom;
+import interfaces.InputOutput;
 
 import java.util.*;
 
@@ -14,21 +14,23 @@ public class MainLoop {
     private RequestHandler requestHandler = new RequestHandler();
 
     private Request inputtedRequest;
+    private InputOutput curVersionOutput = null;
 
     /**
      * Запуск главного цикла.
-     * @param input Класс, реализующий Input интерфейс.
-     * @param output Класс, реализующий Output интерфейс.
+     * @param versions Map, в котором лежат классы, реализующие InputOutput интерфейс.
      */
-    void runMainLoop(Input input, Output output) throws Exception {
+    void runMainLoop(Map<RequestFrom, InputOutput> versions) throws Exception {
 
         while (true){
             Thread.sleep(10);
 
-            inputtedRequest = input.getRequest();
+            for(RequestFrom curVersion: versions.keySet()){
+                inputtedRequest = versions.get(curVersion).getRequest();
 
-            if (inputtedRequest != null && !inputtedRequest.getRequest().equals("")){
-                requests.push(inputtedRequest);
+                if (inputtedRequest != null && !inputtedRequest.getRequest().equals("")){
+                    requests.push(inputtedRequest);
+                }
             }
 
             if (requests.isEmpty()){
@@ -43,7 +45,9 @@ public class MainLoop {
 
             User curUser = users.get(curRequest.getUserId());
             ArrayList<String> curAnswer = requestHandler.getAnswer(curRequest.getRequest(), curUser);
-            output.print(curUser.getId(), curAnswer);
+
+            curVersionOutput = versions.get(curRequest.getRequestFrom());
+            curVersionOutput.print(curUser.getId(), curAnswer);
         }
     }
 }

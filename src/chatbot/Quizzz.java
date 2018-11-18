@@ -1,11 +1,14 @@
 package chatbot;
 
-import interfaces.Input;
-import interfaces.Output;
+import enums.RequestFrom;
+import interfaces.InputOutput;
 
 import org.apache.commons.cli.*;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Точка входа в приложение. Обработка входных аргументов для запуска определённой версии чат-бота.
@@ -37,20 +40,19 @@ public class Quizzz {
         HelpFormatter formatter = new HelpFormatter();
         CommandLine cmd;
 
-        Object curMode = null;
+        Map<RequestFrom, InputOutput> versions = new HashMap<>();
 
         try {
             cmd = parser.parse(options, args);
             if (cmd.getOptions().length == 0){
-                System.out.println("See help. Quizzz.java [-h or --help]");
+                formatter.printHelp("Quizzz.java", options);
                 System.exit(1);
             }
 
-            if (cmd.getOptions().length > 1){
-                System.out.println("Enter ONLY one argument!");
-                System.out.println("See help. Quizzz.java [-h or --help]");
-                System.exit(1);
-            }
+//            if (cmd.getOptions().length > 1){
+//                formatter.printHelp("Quizzz.java", options);
+//                System.exit(1);
+//            }
 
             if (cmd.hasOption("h")){
                 formatter.printHelp("Quizzz.java", options);
@@ -59,18 +61,21 @@ public class Quizzz {
 
             if (cmd.hasOption("vk")){
                 System.out.println("VkBot Version is running.");
-                curMode = new VkVersion();
+                versions.put(RequestFrom.VK, new VkVersion());
             }
-            else if (cmd.hasOption("c")){
+
+            if (cmd.hasOption("c")){
                 System.out.println("Console Version is running.");
-                curMode = new Console();
+                versions.put(RequestFrom.Console, new Console());
             }
-            else if (cmd.hasOption("t")){
+
+            if (cmd.hasOption("t")){
                 System.out.println("TelegramBot Version is running.");
                 ApiContextInitializer.init();
-                curMode = new TelegramBot();
+                TelegramBot telegramBot = new TelegramBot();
+                versions.put(RequestFrom.Telegram, telegramBot);
                 TelegramBotsApi botApi = new TelegramBotsApi();
-                botApi.registerBot((TelegramBot)curMode);
+                botApi.registerBot(telegramBot);
             }
 
         } catch (ParseException e) {
@@ -80,6 +85,6 @@ public class Quizzz {
         }
 
         MainLoop mainLoop = new MainLoop();
-        mainLoop.runMainLoop((Input)curMode, (Output)curMode);
+        mainLoop.runMainLoop(versions);
     }
 }

@@ -1,7 +1,7 @@
 package chatbot;
 
-import interfaces.Input;
-import interfaces.Output;
+import enums.RequestFrom;
+import interfaces.InputOutput;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -9,13 +9,13 @@ import java.util.Scanner;
 /**
  * Класс консоли(User Interface), который реализовывает интерфейсы INPUT, Output для правильного общения с юзером.
  */
-public class Console implements Input, Output {
+public class Console implements InputOutput {
     private static final Scanner INPUT = new Scanner(System.in);
     private static final String CONSOLE_ID = "ConsoleUser";
 
     @Override
     public Request getRequest() {
-        return new Request(CONSOLE_ID, INPUT.nextLine());
+        return new Request(CONSOLE_ID, INPUT.nextLine(), RequestFrom.Console);
     }
 
     @Override
