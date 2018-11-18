@@ -51,12 +51,6 @@ public class AnswerRepository {
         return "Сорян, не понял. Давай ещё раз.";
     }
 
-    public static String getGamesString() {
-        return "Выбирай игру: \n" +
-                "   1. Викторина\n" +
-                "   2. Виселица";
-    }
-
     public static String getExitString(){
         return "Вышел.";
     }
