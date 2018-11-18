@@ -26,8 +26,8 @@ public class RequestHandlerTest {
         String testInputtedString = "/start";
         ArrayList<String> helloAnswers = AnswerReader.ParseAnswersFromFile("FilesForBot/Answers/Hello.txt");
         String gamesString = "Выбирай игру: \n" +
-                "   1. Викторина\n" +
-                "   2. Виселица";
+                "1. Викторина; \n" +
+                "2. Виселица;";
 
         actual = requestHandler.getAnswer(testInputtedString, testUser2);
 
