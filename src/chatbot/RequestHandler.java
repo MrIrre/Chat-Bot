@@ -3,7 +3,9 @@ package chatbot;
 import enums.Status;
 import games.HangmanLogic;
 import games.QuizLogic;
+import interfaces.Game;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -11,6 +13,7 @@ import java.util.ArrayList;
  */
 public class RequestHandler {
     public static final String EXIT_STRING = "/exit";
+    public String[] games = new String[] {"Викторина", "Виселица"};
 
     /**
      * Метод, обрабатывающий запрос, который возвращает ответ на данный запрос.
@@ -34,7 +37,7 @@ public class RequestHandler {
                 answerList.add(AnswerRepository.getRandomAnswer(AnswerRepository.helloAnswers));
                 user.state = Status.ChoosingGame;
                 answerList.add("Чтобы выйти в любой момент из игры напиши \"" + EXIT_STRING + "\"");
-                answerList.add(AnswerRepository.getGamesString());
+                answerList.add(getGamesString());
             }
         }
 
@@ -73,5 +76,17 @@ public class RequestHandler {
         }
 
         return answerList;
+    }
+
+    String getGamesString(){
+        StringBuilder gamesString = new StringBuilder();
+        gamesString.append("Выбирай игру: \n");
+
+        for (int i = 0; i < games.length - 1; i++){
+            gamesString.append((i + 1) + ". " + games[i] + "; \n");
+        }
+
+        gamesString.append(games.length + ". " + games[games.length - 1] + ";");
+        return new String(gamesString);
     }
 }
