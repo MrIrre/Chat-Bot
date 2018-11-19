@@ -7,13 +7,8 @@ import org.apache.commons.cli.*;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.concurrent.*;
-
-import static java.lang.String.format;
 
 /**
  * Точка входа в приложение. Обработка входных аргументов для запуска определённой версии чат-бота.
@@ -53,11 +48,6 @@ public class Quizzz {
                 formatter.printHelp("Quizzz.java", options);
                 System.exit(1);
             }
-
-//            if (cmd.getOptions().length > 1){
-//                formatter.printHelp("Quizzz.java", options);
-//                System.exit(1);
-//            }
 
             if (cmd.hasOption("h")){
                 formatter.printHelp("Quizzz.java", options);
