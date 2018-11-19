@@ -7,8 +7,13 @@ import org.apache.commons.cli.*;
 import org.telegram.telegrambots.ApiContextInitializer;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.*;
+
+import static java.lang.String.format;
 
 /**
  * Точка входа в приложение. Обработка входных аргументов для запуска определённой версии чат-бота.

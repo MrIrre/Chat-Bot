@@ -17,14 +17,9 @@ public class VkVersion implements InputOutput {
     private ConcurrentLinkedQueue<Request> requestQueue = new ConcurrentLinkedQueue<>();
 
     public Request getRequest() {
-        Request request = curRequest;
-        curRequest = null;
 
         GROUP.onEveryMessage(message ->
-                curRequest = new Request(message.authorId().toString(), message.getText(), RequestFrom.VK));
-
-        if (request != null)
-            requestQueue.add(request);
+                requestQueue.add(new Request(message.authorId().toString(), message.getText(), RequestFrom.VK)));
 
         return requestQueue.poll();
     }
